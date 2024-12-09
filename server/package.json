@@ -20,5 +20,16 @@
     "helmet": "^8.0.0",
     "morgan": "^1.10.0",
     "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
