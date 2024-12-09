@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && npx tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\"",
+    "seed": "ts-node src/seed/seedDynamodb.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "aws-sdk": "^2.1692.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "dynamoose": "^4.0.2",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
