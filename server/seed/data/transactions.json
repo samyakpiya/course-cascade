@@ -1,0 +1,66 @@
+[
+  {
+    "userId": "user_2ntu96pUCljUV2T9W0AThzjacQB",
+    "transactionId": "pi_1a2b3c4d5e6f7g8h9i0j1k2l",
+    "dateTime": "2024-03-01T10:30:00Z",
+    "courseId": "3a9f3d6c-c391-4b1c-9c3d-6c3f3d6c3f3d",
+    "paymentProvider": "stripe",
+    "amount": 4999
+  },
+  {
+    "userId": "user_2ntu96pUCljUV2T9W0AThzjacQB",
+    "transactionId": "pi_2b3c4d5e6f7g8h9i0j1k2l3m",
+    "dateTime": "2024-03-15T14:45:00Z",
+    "courseId": "8b4f7d9c-4b1c-4b1c-8b4f-7d9c8b4f7d9c",
+    "paymentProvider": "stripe",
+    "amount": 9999
+  },
+  {
+    "userId": "user_5vBn23WsLkMp7Jh4Gt8FxYcRz",
+    "transactionId": "pi_3c4d5e6f7g8h9i0j1k2l3m4n",
+    "dateTime": "2024-03-20T09:00:00Z",
+    "courseId": "c5d6e7f8-g9h0-i1j2-k3l4-m5n6o7p8q9r0",
+    "paymentProvider": "stripe",
+    "amount": 7999
+  },
+  {
+    "userId": "user_6tHm89QwNpKj3Fx5Vy2RdLcBs",
+    "transactionId": "pi_4d5e6f7g8h9i0j1k2l3m4n5o",
+    "dateTime": "2024-03-20T11:15:00Z",
+    "courseId": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+    "paymentProvider": "stripe",
+    "amount": 8999
+  },
+  {
+    "userId": "user_9xWp45MnKjL8vRt2Hs6BqDcEy",
+    "transactionId": "pi_5e6f7g8h9i0j1k2l3m4n5o6p",
+    "dateTime": "2024-03-25T08:15:00Z",
+    "courseId": "3a9f3d6c-c391-4b1c-9c3d-6c3f3d6c3f3d",
+    "paymentProvider": "stripe",
+    "amount": 4999
+  },
+  {
+    "userId": "user_6tHm89QwNpKj3Fx5Vy2RdLcBs",
+    "transactionId": "pi_6f7g8h9i0j1k2l3m4n5o6p7q",
+    "dateTime": "2024-03-27T13:20:00Z",
+    "courseId": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+    "paymentProvider": "stripe",
+    "amount": 12999
+  },
+  {
+    "userId": "user_9xWp45MnKjL8vRt2Hs6BqDcEy",
+    "transactionId": "pi_7g8h9i0j1k2l3m4n5o6p7q8r",
+    "dateTime": "2024-03-28T15:30:00Z",
+    "courseId": "c5d6e7f8-g9h0-i1j2-k3l4-m5n6o7p8q9r0",
+    "paymentProvider": "stripe",
+    "amount": 7999
+  },
+  {
+    "userId": "user_6tHm89QwNpKj3Fx5Vy2RdLcBs",
+    "transactionId": "pi_8h9i0j1k2l3m4n5o6p7q8r9s",
+    "dateTime": "2024-03-29T09:45:00Z",
+    "courseId": "8b4f7d9c-4b1c-4b1c-8b4f-7d9c8b4f7d9c",
+    "paymentProvider": "stripe",
+    "amount": 9999
+  }
+]
