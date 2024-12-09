@@ -26,15 +26,16 @@ function NonDashboardNavbar() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="nondashboard-navbar__actions">
-        <button className="nondashboard-navbar__notification-button">
-          <span className="nondashboard-navbar__notification-indicator"></span>
-          {/* TODO: Add notifications logic */}
-          <Bell className="nondashboard-navbar__notification-icon" />
-        </button>
 
-        {/* TODO: Add signin buttons */}
+        <div className="nondashboard-navbar__actions">
+          <button className="nondashboard-navbar__notification-button">
+            <span className="nondashboard-navbar__notification-indicator"></span>
+            {/* TODO: Add notifications logic */}
+            <Bell className="nondashboard-navbar__notification-icon" />
+          </button>
+
+          {/* TODO: Add signin buttons */}
+        </div>
       </div>
     </nav>
   );
