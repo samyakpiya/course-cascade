@@ -1,7 +1,6 @@
 import AccordionSections from "@/components/AccordionSections";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
-import { Users2 } from "lucide-react";
 import React from "react";
 
 function SelectedCourse({ course, handleEnrollNow }: SelectedCourseProps) {
