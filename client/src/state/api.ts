@@ -94,6 +94,9 @@ export const api = createApi({
       invalidatesTags: ["Users"],
     }),
 
+    getTransactions: build.query<Transaction[], string>({
+      query: (userId) => `transactions?userId=${userId}`,
+    }),
     createTransaction: build.mutation<Transaction, Partial<Transaction>>({
       query: (transaction) => ({
         url: "transactions",
@@ -109,5 +112,6 @@ export const {
   useGetCoursesQuery,
   useGetCourseQuery,
   useCreateStripePaymentIntentMutation,
+  useGetTransactionsQuery,
   useCreateTransactionMutation,
 } = api;
