@@ -5,9 +5,17 @@ import DroppableComponent from "@/app/(dashboard)/teacher/courses/[id]/Droppable
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { courseSchema } from "@/lib/schemas";
-import { centsToDollars, createCourseFormData } from "@/lib/utils";
+import {
+  centsToDollars,
+  createCourseFormData,
+  uploadAllVideos,
+} from "@/lib/utils";
 import { openSectionModal, setSections } from "@/state";
-import { useGetCourseQuery, useUpdateCourseMutation } from "@/state/api";
+import {
+  useGetCourseQuery,
+  useGetUploadVideoUrlMutation,
+  useUpdateCourseMutation,
+} from "@/state/api";
 import { useAppDispatch, useAppSelector } from "@/state/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Plus } from "lucide-react";
@@ -24,8 +32,8 @@ const CourseEditor = () => {
   const id = params.id as string;
   const { data: course, isLoading, refetch } = useGetCourseQuery(id);
   const [updateCourse] = useUpdateCourseMutation();
+  const [getUploadVideoUrl] = useGetUploadVideoUrlMutation();
 
-  //upload video functionality
   const dispatch = useAppDispatch();
   const { sections } = useAppSelector((state) => state.global.courseEditor);
 
@@ -56,14 +64,18 @@ const CourseEditor = () => {
 
   const onSubmit = async (data: CourseFormData) => {
     try {
-      const formData = createCourseFormData(data, sections);
+      const updatedSections = await uploadAllVideos(
+        sections,
+        id,
+        getUploadVideoUrl
+      );
+
+      const formData = createCourseFormData(data, updatedSections);
 
       await updateCourse({
         courseId: id,
         formData,
       }).unwrap();
-
-      // await uploadAllVideos(sections, updatedCourse.sections, id, uploadVideo);
 
       refetch();
     } catch (error) {
@@ -76,7 +88,11 @@ const CourseEditor = () => {
       <div className="flex items-center gap-5 mb-5">
         <button
           className="flex items-center border border-customgreys-dirtyGrey rounded-lg p-2 gap-2"
-          onClick={() => router.push("/teacher/courses")}
+          onClick={() =>
+            router.push("/teacher/courses", {
+              scroll: false,
+            })
+          }
         >
           <ArrowLeft className="size-4" />
           <span>Back to Courses</span>
