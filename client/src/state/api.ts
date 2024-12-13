@@ -3,6 +3,7 @@ import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query";
 import { User } from "@clerk/nextjs/server";
 import { Clerk } from "@clerk/clerk-js";
 import { toast } from "sonner";
+import { string } from "zod";
 
 const customBaseQuery = async (
   args: string | FetchArgs,
@@ -128,6 +129,23 @@ export const api = createApi({
       invalidatesTags: ["Courses"],
     }),
 
+    getUploadVideoUrl: build.mutation<
+      { uploadUrl: string; videoUrl: string },
+      {
+        courseId: string;
+        chapterId: string;
+        sectionId: string;
+        fileName: string;
+        fileType: string;
+      }
+    >({
+      query: ({ courseId, sectionId, chapterId, fileName, fileType }) => ({
+        url: `courses/${courseId}/sections/${sectionId}/chapters/${chapterId}/get-upload-url`,
+        method: "POST",
+        body: { fileName, fileType },
+      }),
+    }),
+
     /**
      * ==============
      * TRANSACTIONS
@@ -222,6 +240,7 @@ export const {
   useDeleteCourseMutation,
   useGetCoursesQuery,
   useGetCourseQuery,
+  useGetUploadVideoUrlMutation,
   useCreateStripePaymentIntentMutation,
   useGetTransactionsQuery,
   useCreateTransactionMutation,
