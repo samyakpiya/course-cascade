@@ -1,12 +1,11 @@
 "use client";
 
-import { SignUp, useUser } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import React from "react";
 import { dark } from "@clerk/themes";
 import { useSearchParams } from "next/navigation";
 
 const SignUpComponent = () => {
-  const { user } = useUser();
   const searchParams = useSearchParams();
   const isCheckoutPage = searchParams.get("showSignUp") !== null;
   const courseId = searchParams.get("id");
@@ -17,15 +16,16 @@ const SignUpComponent = () => {
 
   const getRedirectUrl = () => {
     if (isCheckoutPage) {
-      return `/checkout?step=2&id=${courseId}&showSignUp=false`;
+      return `/checkout?step=2&id=${courseId}&showSignUp=true`;
     }
 
-    const userType = user?.publicMetadata?.userType as string;
-    if (userType === "teacher") {
-      return "/teacher/courses";
+    const redirectUrl = searchParams.get("redirectUrl");
+
+    if (redirectUrl) {
+      return decodeURIComponent(redirectUrl);
     }
 
-    return "/user/courses";
+    return "/";
   };
 
   return (
