@@ -1326,11 +1326,11 @@ input[type="color"] {
 }
 
 .course-card-teacher__edit-button {
-  @apply rounded w-full bg-primary-700 border-none hover:bg-primary-600 hover:text-customgreys-primarybg text-white-100 cursor-pointer;
+  @apply rounded w-full bg-primary-700 border-none hover:bg-primary-600 text-white-100 cursor-pointer;
 }
 
 .course-card-teacher__delete-button {
-  @apply rounded w-full bg-red-600 text-white-100 hover:bg-red-400 hover:text-customgreys-primarybg cursor-pointer;
+  @apply rounded w-full bg-red-600 text-white-100 hover:bg-red-400 cursor-pointer;
 }
 
 /* NonDashboard Navbar Additional Classes */
