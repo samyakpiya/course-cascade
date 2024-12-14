@@ -20,15 +20,13 @@ const TeacherCourseCard = ({
   return (
     <Card className="course-card-teacher group">
       <CardHeader className="course-card-teacher__header">
-        {course.image && (
-          <Image
-            src={course.image || "/placeholder.png"}
-            alt={course.title}
-            width={370}
-            height={200}
-            className="course-card-teacher__image"
-          />
-        )}
+        <Image
+          src={course.image || "/placeholder.png"}
+          alt={course.title}
+          width={370}
+          height={200}
+          className="course-card-teacher__image"
+        />
       </CardHeader>
 
       <CardContent className="course-card-teacher__content">
@@ -78,7 +76,7 @@ const TeacherCourseCard = ({
               </div>
               <div>
                 <Button
-                  className="course-card-teacher__delete-button"
+                  className="rounded w-full bg-red-600 text-white-100 hover:bg-red-400"
                   onClick={() => onDelete(course)}
                 >
                   <Trash2 className="size-4 mr-2" />

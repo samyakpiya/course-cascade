@@ -160,6 +160,11 @@ export const api = createApi({
         method: "POST",
         body: transaction,
       }),
+      invalidatesTags: (result, error, transaction) => [
+        "Courses",
+        "UserCourseProgress",
+        { type: "Courses", id: transaction.courseId },
+      ],
     }),
     createStripePaymentIntent: build.mutation<
       { clientSecret: string },
