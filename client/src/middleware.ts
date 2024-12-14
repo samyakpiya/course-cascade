@@ -1,28 +1,17 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isStudentRoute = createRouteMatcher(["/user/(.*)"]);
-const isTeacherRoute = createRouteMatcher(["/teacher/(.*)"]);
+const isProtectedRoute = createRouteMatcher(["/teacher(.*)", "/user(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { sessionClaims } = await auth();
+  const { userId } = await auth();
 
-  const userRole =
-    (sessionClaims?.metadata as { userType: "student" | "teacher" })
-      ?.userType || "student";
-
-  if (isStudentRoute(req)) {
-    if (userRole !== "student") {
-      const url = new URL("/teacher/courses", req.url);
-      return NextResponse.redirect(url);
-    }
-  }
-
-  if (isTeacherRoute(req)) {
-    if (userRole !== "teacher") {
-      const url = new URL("/user/courses", req.url);
-      return NextResponse.redirect(url);
-    }
+  if (!userId && isProtectedRoute(req)) {
+    // Create the signin URL with the current path as the redirect URL
+    const signinUrl = new URL("/signin", req.url);
+    // Encode the current URL to handle special characters properly
+    signinUrl.searchParams.set("redirectUrl", encodeURIComponent(req.url));
+    return NextResponse.redirect(signinUrl);
   }
 });
 

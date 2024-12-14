@@ -1,15 +1,12 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Bell, BookOpen } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import UserButtonComponent from "@/components/UserButtonComponent";
 
 function NonDashboardNavbar() {
-  const { user } = useUser();
-  const userRole = user?.publicMetadata?.userType as "student" | "teacher";
-
   return (
     <nav className="nondashboard-navbar">
       <div className="nondashboard-navbar__container">
@@ -24,8 +21,8 @@ function NonDashboardNavbar() {
                 className="nondashboard-navbar__search-input"
                 scroll={false}
               >
-                <span className="hidden sm:inline">Search Courses</span>
-                <span className="sm:hidden">Search</span>
+                <span className="hidden md:inline">Search Courses</span>
+                <span className="md:hidden">Search</span>
               </Link>
               <BookOpen
                 className="nondashboard-navbar__search-icon"
@@ -43,20 +40,7 @@ function NonDashboardNavbar() {
           </button>
 
           <SignedIn>
-            <UserButton
-              appearance={{
-                baseTheme: dark,
-                elements: {
-                  userButtonOuterIdentifier: "text-customgreys-dirtyGrey",
-                  userButtonBox: "scale-90 sm:scale-100",
-                },
-              }}
-              showName={true}
-              userProfileMode="navigation"
-              userProfileUrl={
-                userRole === "teacher" ? "/teacher/profile" : "/user/profile"
-              }
-            />
+            <UserButtonComponent />
           </SignedIn>
           <SignedOut>
             <Link

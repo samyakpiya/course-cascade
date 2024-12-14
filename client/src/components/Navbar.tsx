@@ -1,17 +1,13 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import { Bell, BookOpen } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import UserButtonComponent from "@/components/UserButtonComponent";
 
 function Navbar({ isCoursePage }: { isCoursePage: boolean }) {
-  const { user } = useUser();
-  const userRole = user?.publicMetadata?.userType as "student" | "teacher";
-
   return (
     <nav className="dashboard-navbar">
       <div className="dashboard-navbar__container">
@@ -43,20 +39,7 @@ function Navbar({ isCoursePage }: { isCoursePage: boolean }) {
             <Bell className="nondashboard-navbar__notification-icon" />
           </button>
 
-          <UserButton
-            appearance={{
-              baseTheme: dark,
-              elements: {
-                userButtonOuterIdentifier: "text-customgreys-dirtyGrey",
-                userButtonBox: "scale-90 sm:scale-100",
-              },
-            }}
-            showName={true}
-            userProfileMode="navigation"
-            userProfileUrl={
-              userRole === "teacher" ? "/teacher/profile" : "/user/profile"
-            }
-          />
+          <UserButtonComponent />
         </div>
       </div>
     </nav>
