@@ -9,7 +9,7 @@ import { useCurrentCourse } from "@/hooks/useCurrentCourse";
 import { useCheckoutNavigation } from "@/hooks/useChekoutNavigation";
 import { useClerk, useUser } from "@clerk/nextjs";
 import CoursePreview from "@/components/CoursePreview";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -19,6 +19,7 @@ import {
 import { getCoursePath } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const PaymentPageContent = () => {
   const router = useRouter();
@@ -129,6 +130,15 @@ const PaymentPageContent = () => {
               <p className="payment__subtitle">
                 Fill out the payment details below to complete your purchase.
               </p>
+
+              <Alert className="border-primary-700">
+                <Info className="h-4 w-4" />
+                <AlertTitle>Heads Up!</AlertTitle>
+                <AlertDescription>
+                  Use card 4242 4242 4242 4242 with any future expiry/CVC for
+                  simulating successful payment.
+                </AlertDescription>
+              </Alert>
 
               <div className="payment__method">
                 <h3 className="payment__method-title">Payment Method</h3>
