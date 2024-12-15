@@ -3,7 +3,7 @@
 ![Course Cascade Homepage](https://i.imgur.com/irWkHlZ.png)
 ![Course Cascade Chapter Page](https://i.imgur.com/UxbVzUf.png)
 
-Course Cascade is a modern Learning Management System (LMS) built with Next.js, leveraging cloud infrastructure for scalability and performance.
+Course Cascade is a modern Learning Management System (LMS) built with Next.js, leveraging cloud infrastructure for scalability and performance. View the live website [here](https://course-cascade.vercel.app/).
 
 ## Features
 
@@ -166,7 +166,7 @@ Detailed deployment instructions can be found in the [deployment documentation](
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-
+- EdRoh for the project inspiration
 - Next.js team for the amazing framework
 - Vercel for hosting and deployment
 - AWS for cloud infrastructure
