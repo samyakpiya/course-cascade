@@ -12,51 +12,95 @@ import CoursePreview from "@/components/CoursePreview";
 import { CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useCreateTransactionMutation } from "@/state/api";
+import {
+  useCreateTransactionMutation,
+  useGetUserEnrolledCoursesQuery,
+} from "@/state/api";
+import { getCoursePath } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 
 const PaymentPageContent = () => {
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [createTransaction] = useCreateTransactionMutation();
 
   const { navigateToStep } = useCheckoutNavigation();
   const { course, courseId } = useCurrentCourse();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
+  const { data: enrolledCourses, isLoading: enrolledCoursesLoading } =
+    useGetUserEnrolledCoursesQuery(user?.id ?? "", {
+      skip: !isLoaded || !user,
+    });
+
+  if (!course) return null;
+
+  if (enrolledCoursesLoading) return <Loading />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isCourseAlreadyPurchased = enrolledCourses?.some(
+      (c) => c.courseId === courseId
+    );
+
+    if (isCourseAlreadyPurchased) {
+      toast.warning("You are already enrolled in this course!", {
+        action: (
+          <Button
+            className="text-white-100"
+            onClick={() => router.push(getCoursePath(course))}
+          >
+            Go to course
+          </Button>
+        ),
+      });
+      return;
+    }
 
     if (!stripe || !elements) {
       toast.error("Stripe service is not available");
       return;
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_LOCAL_URL
-      ? `http://${process.env.NEXT_PUBLIC_LOCAL_URL}`
-      : process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-      : undefined;
+    const baseUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+        : window.location.origin;
 
-    const result = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${baseUrl}/checkout?step=3&id=${courseId}`,
-      },
-      redirect: "if_required",
-    });
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${baseUrl}/checkout?step=3&id=${courseId}`,
+        },
+        redirect: "if_required",
+      });
 
-    if (result.paymentIntent?.status === "succeeded") {
-      const transactionData: Partial<Transaction> = {
-        transactionId: result.paymentIntent.id,
-        userId: user?.id,
-        courseId: courseId,
-        paymentProvider: "stripe",
-        amount: course?.price || 0,
-      };
+      if (result.error) {
+        toast.error(result.error.message || "Payment failed");
+        return;
+      }
 
-      await createTransaction(transactionData);
-      navigateToStep(3);
+      if (result.paymentIntent?.status === "succeeded") {
+        const transactionData: Partial<Transaction> = {
+          transactionId: result.paymentIntent.id,
+          userId: user?.id,
+          courseId: courseId,
+          paymentProvider: "stripe",
+          amount: course?.price || 0,
+        };
+
+        await createTransaction(transactionData);
+        navigateToStep(3);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.error("Payment failed. Please try again.");
     }
   };
 
@@ -64,8 +108,6 @@ const PaymentPageContent = () => {
     await signOut();
     navigateToStep(1);
   };
-
-  if (!course) return null;
 
   return (
     <div className="payment">

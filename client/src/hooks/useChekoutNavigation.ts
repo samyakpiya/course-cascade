@@ -27,7 +27,7 @@ export const useCheckoutNavigation = () => {
 
   useEffect(() => {
     if (isLoaded && !isSignedIn && checkoutStep > 1) {
-      navigateToStep(1);
+      navigateToStep(checkoutStep);
     }
   }, [isLoaded, isSignedIn, checkoutStep, navigateToStep]);
 

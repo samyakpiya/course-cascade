@@ -288,6 +288,19 @@ export const customDataGridStyles = {
   },
 };
 
+export const getCoursePath = (course: Course) => {
+  if (
+    course.sections &&
+    course.sections.length > 0 &&
+    course.sections[0].chapters.length > 0
+  ) {
+    const firstChapter = course.sections[0].chapters[0];
+    return `/user/courses/${course.courseId}/chapters/${firstChapter.chapterId}`;
+  } else {
+    return `/user/courses/${course.courseId}`;
+  }
+};
+
 export const createCourseFormData = (
   data: CourseFormData,
   sections: Section[]

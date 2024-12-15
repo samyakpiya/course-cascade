@@ -29,7 +29,7 @@ function SelectedCourse({ course, handleEnrollNow }: SelectedCourseProps) {
             {formatPrice(course.price)}
           </span>
           <Button
-            onClick={() => handleEnrollNow(course.courseId)}
+            onClick={() => handleEnrollNow(course)}
             className="bg-primary-700 hover:bg-primary-600"
           >
             Enroll Now

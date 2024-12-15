@@ -1,20 +1,36 @@
 "use client";
 
 import Loading from "@/components/Loading";
-import { useGetCoursesQuery } from "@/state/api";
+import {
+  useGetCoursesQuery,
+  useGetUserEnrolledCoursesQuery,
+} from "@/state/api";
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import CourseCardSearch from "@/components/CourseCardSearch";
 import SelectedCourse from "./SelectedCourse";
+import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { getCoursePath } from "@/lib/utils";
 
 function Search() {
+  const { isSignedIn, user, isLoaded } = useUser();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { data: courses, isLoading, isError } = useGetCoursesQuery({});
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const router = useRouter();
+
+  const {
+    data: enrolledCourses,
+    isLoading: enrolledCoursesLoading,
+    isError: enrolledCoursesError,
+  } = useGetUserEnrolledCoursesQuery(user?.id ?? "", {
+    skip: !isLoaded || !user,
+  });
 
   useEffect(() => {
     if (courses) {
@@ -27,19 +43,48 @@ function Search() {
     }
   }, [courses, id]);
 
-  if (isLoading) return <Loading />;
+  if (!isLoaded || isLoading || enrolledCoursesLoading) return <Loading />;
 
   if (isError || !courses) return <div>Failed to fetch courses</div>;
+
+  if (enrolledCoursesError || !enrolledCourses)
+    return <div>Failed to fetch enrolled courses</div>;
 
   const handleCourseSelect = (course: Course) => {
     setSelectedCourse(course);
     router.push(`/search?id=${course.courseId}`);
   };
 
-  const handleEnrollNow = (courseId: string) => {
-    router.push(`/checkout?step=1&id=${courseId}&showSignUp=false`, {
-      scroll: false,
-    });
+  const handleEnrollNow = (course: Course) => {
+    const { courseId } = course;
+
+    if (!isSignedIn) {
+      router.push(`/checkout?step=1&id=${courseId}&showSignUp=false`, {
+        scroll: false,
+      });
+    } else {
+      const isCourseAlreadyPurchased = enrolledCourses.some(
+        (c) => c.courseId === courseId
+      );
+
+      if (isCourseAlreadyPurchased) {
+        toast.warning("You are already enrolled in this course!", {
+          action: (
+            <Button
+              className="text-white-100"
+              onClick={() => router.push(getCoursePath(course))}
+            >
+              Go to course
+            </Button>
+          ),
+        });
+        return;
+      }
+
+      router.push(`/checkout?step=2&id=${courseId}&showSignUp=false`, {
+        scroll: false,
+      });
+    }
   };
 
   return (
