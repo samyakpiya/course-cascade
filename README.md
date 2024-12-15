@@ -1,5 +1,8 @@
 # Course Cascade
 
+![Course Cascade Homepage](https://i.imgur.com/irWkHlZ.png)
+![Course Cascade Chapter Page](https://i.imgur.com/UxbVzUf.png)
+
 Course Cascade is a modern Learning Management System (LMS) built with Next.js, leveraging cloud infrastructure for scalability and performance.
 
 ## Features
@@ -11,6 +14,20 @@ Course Cascade is a modern Learning Management System (LMS) built with Next.js, 
 - 🎥 Video content streaming
 - 💾 File storage and management
 - 📱 Responsive design for all devices
+
+## Payment Processing
+
+For demonstration purposes, all Stripe payments are currently processed through a single platform account, meaning course payments go directly to the platform owner.
+
+In a real-world marketplace scenario, the payment system would be implemented using Stripe Connect to facilitate revenue sharing between the platform and instructors. Here's how it would work:
+
+1. Instructors would onboard through Stripe Connect to create connected accounts
+2. When a student purchases a course for $100:
+   - Platform automatically keeps its fee (e.g., 20% = $20)
+   - Instructor automatically receives their share (e.g., 80% = $80)
+3. Payouts would be handled automatically to instructors' bank accounts
+
+This marketplace payment setup is intentionally omitted from the demo but represents the proper approach for a production course marketplace platform.
 
 ## Tech Stack
 
